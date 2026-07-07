@@ -8,6 +8,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="呼吸计时器" />
     <meta name="description" content="睡前十分钟呼吸练习：吸气 5 秒，呼气 5 秒。" />
+    <script>
+      document.documentElement.dataset.theme = localStorage.getItem("breath.theme") === "dark" ? "dark" : "light";
+    </script>
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./icons/icon-180.png" />
     <link rel="icon" href="./icons/icon-192.png" />
@@ -16,6 +19,11 @@
   </head>
   <body>
     <main id="app" class="app-shell">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换到暗黑模式" aria-pressed="false">
+        <span id="theme-icon" aria-hidden="true">☾</span>
+        <span id="theme-label" class="sr-only">切换到暗黑模式</span>
+      </button>
+
       <section id="home-screen" class="screen home-screen" aria-labelledby="app-title">
         <header class="home-header">
           <h1 id="app-title">呼吸计时器</h1>

@@ -8,6 +8,8 @@ import {
 const $ = (selector) => document.querySelector(selector);
 const screens = ["#home-screen", "#prepare-screen", "#session-screen", "#complete-screen"];
 const sessionAudio = $("#session-audio");
+const themeToggle = $("#theme-toggle");
+const themeMeta = document.querySelector('meta[name="theme-color"]');
 
 const state = {
   status: "idle",
@@ -32,6 +34,19 @@ hapticsToggle.disabled = !supportsHaptics;
 $("#haptics-support").classList.toggle("hidden", supportsHaptics);
 soundToggle.checked = preferences.sound;
 if (!preferences.sound) $("#lock-note").textContent = "开启海浪与提示音后可息屏练习";
+
+function applyTheme(theme, persist = false) {
+  const dark = theme === "dark";
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  themeToggle.setAttribute("aria-pressed", String(dark));
+  themeToggle.setAttribute("aria-label", dark ? "切换到浅色模式" : "切换到暗黑模式");
+  $("#theme-label").textContent = dark ? "切换到浅色模式" : "切换到暗黑模式";
+  $("#theme-icon").textContent = dark ? "☀︎" : "☾";
+  themeMeta.content = dark ? "#08110e" : "#f2f7f4";
+  if (persist) localStorage.setItem("breath.theme", dark ? "dark" : "light");
+}
+
+applyTheme(document.documentElement.dataset.theme);
 
 function showScreen(selector) {
   screens.forEach((screen) => $(screen).classList.toggle("hidden", screen !== selector));
@@ -247,6 +262,9 @@ function syncAfterVisibilityChange() {
 $("#start-button").addEventListener("click", startPreparation);
 $("#cancel-prepare-button").addEventListener("click", resetSession);
 $("#done-button").addEventListener("click", resetSession);
+themeToggle.addEventListener("click", () => {
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", true);
+});
 
 $("#pause-button").addEventListener("click", () => {
   state.status === "paused" ? resumeSession() : pauseSession();
