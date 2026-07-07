@@ -126,6 +126,8 @@ button { touch-action: manipulation; }
 .preference-row input:checked + .switch { background: #7288e3; }
 .preference-row input:checked + .switch::after { transform: translateX(19px); }
 .preference-row input:focus-visible + .switch { outline: 3px solid white; outline-offset: 3px; }
+.preference-row:has(input:disabled) { cursor: default; opacity: .52; }
+.preference-note { margin: -3px 12px 1px; color: rgba(255,255,255,.42); font-size: 12px; line-height: 1.4; }
 .safety-note { margin: 22px 12px 0; text-align: center; color: rgba(255,255,255,.36); font-size: 12px; line-height: 1.55; }
 
 .prepare-screen, .complete-screen { display: flex; flex-direction: column; justify-content: space-between; text-align: center; }

@@ -1,4 +1,5 @@
 import {
+  PHASE_SECONDS,
   PREPARATION_SECONDS,
   SESSION_SECONDS,
   breathingSnapshot,
@@ -25,10 +26,16 @@ const preferences = {
 
 const hapticsToggle = $("#haptics-toggle");
 const soundToggle = $("#sound-toggle");
-hapticsToggle.checked = preferences.haptics;
+const supportsHaptics = "vibrate" in navigator;
+hapticsToggle.checked = preferences.haptics && supportsHaptics;
+hapticsToggle.disabled = !supportsHaptics;
+$("#haptics-support").classList.toggle("hidden", supportsHaptics);
 soundToggle.checked = preferences.sound;
 
 let audioContext;
+let audioMaster;
+let noiseBuffer;
+let activeBreathSound;
 
 function showScreen(selector) {
   screens.forEach((screen) => $(screen).classList.toggle("hidden", screen !== selector));
@@ -39,36 +46,118 @@ function eased(value) {
   return clamped * clamped * (3 - 2 * clamped);
 }
 
+function ensureAudio() {
+  audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+
+  if (!audioMaster) {
+    const compressor = audioContext.createDynamicsCompressor();
+    compressor.threshold.value = -18;
+    compressor.knee.value = 18;
+    compressor.ratio.value = 4;
+    compressor.attack.value = 0.006;
+    compressor.release.value = 0.22;
+
+    audioMaster = audioContext.createGain();
+    audioMaster.gain.value = 1.15;
+    audioMaster.connect(compressor).connect(audioContext.destination);
+  }
+
+  if (!noiseBuffer) {
+    noiseBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 2, audioContext.sampleRate);
+    const channel = noiseBuffer.getChannelData(0);
+    let previous = 0;
+    for (let index = 0; index < channel.length; index += 1) {
+      const white = Math.random() * 2 - 1;
+      previous = previous * 0.94 + white * 0.06;
+      channel[index] = previous * 2.6;
+    }
+  }
+
+  if (audioContext.state === "suspended") audioContext.resume();
+  return audioContext;
+}
+
+function stopBreathSound(fadeSeconds = 0.08) {
+  if (!activeBreathSound || !audioContext) return;
+  const now = audioContext.currentTime;
+  const { gain, nodes } = activeBreathSound;
+  gain.gain.cancelScheduledValues(now);
+  gain.gain.setTargetAtTime(0.0001, now, Math.max(fadeSeconds / 3, 0.01));
+  nodes.forEach((node) => {
+    try { node.stop(now + fadeSeconds); } catch (_) { /* already stopped */ }
+  });
+  activeBreathSound = null;
+}
+
+function playBreathSound(kind, duration = PHASE_SECONDS) {
+  if (!preferences.sound || (kind !== "inhale" && kind !== "exhale")) return;
+  const context = ensureAudio();
+  stopBreathSound();
+
+  const now = context.currentTime;
+  const length = Math.max(duration, 0.18);
+  const noise = context.createBufferSource();
+  const filter = context.createBiquadFilter();
+  const tone = context.createOscillator();
+  const toneGain = context.createGain();
+  const gain = context.createGain();
+
+  noise.buffer = noiseBuffer;
+  noise.loop = true;
+  filter.type = "bandpass";
+  filter.Q.value = kind === "inhale" ? 0.7 : 0.55;
+  filter.frequency.setValueAtTime(kind === "inhale" ? 420 : 1150, now);
+  filter.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 1450 : 300, now + length);
+
+  tone.type = "sine";
+  tone.frequency.setValueAtTime(kind === "inhale" ? 165 : 205, now);
+  tone.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 245 : 118, now + length);
+  toneGain.gain.value = kind === "inhale" ? 0.16 : 0.12;
+
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(kind === "inhale" ? 0.17 : 0.19, now + Math.min(0.55, length * 0.28));
+  gain.gain.setValueAtTime(kind === "inhale" ? 0.17 : 0.19, now + Math.max(length - 0.7, 0.12));
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + length);
+
+  noise.connect(filter).connect(gain);
+  tone.connect(toneGain).connect(gain);
+  gain.connect(audioMaster);
+  noise.start(now);
+  tone.start(now);
+  noise.stop(now + length + 0.05);
+  tone.stop(now + length + 0.05);
+  activeBreathSound = { gain, nodes: [noise, tone] };
+}
+
 function playTone(kind) {
   if (!preferences.sound) return;
-  audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
-  if (audioContext.state === "suspended") audioContext.resume();
-
-  const now = audioContext.currentTime;
-  const duration = kind === "exhale" ? 0.42 : kind === "completed" ? 0.65 : 0.34;
+  const context = ensureAudio();
+  const now = context.currentTime;
+  const duration = kind === "exhale" ? 0.5 : kind === "completed" ? 0.75 : 0.44;
   const frequencies = kind === "completed" ? [523.25, 659.25] : [kind === "inhale" ? 523.25 : 392];
 
   frequencies.forEach((frequency) => {
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
     oscillator.type = "sine";
     oscillator.frequency.value = frequency;
     gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(kind === "completed" ? 0.045 : 0.075, now + duration * 0.25);
+    gain.gain.exponentialRampToValueAtTime(kind === "completed" ? 0.11 : 0.16, now + duration * 0.2);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-    oscillator.connect(gain).connect(audioContext.destination);
+    oscillator.connect(gain).connect(audioMaster);
     oscillator.start(now);
     oscillator.stop(now + duration);
   });
 }
 
 function vibrate(kind) {
-  if (!preferences.haptics || !("vibrate" in navigator)) return;
-  navigator.vibrate(kind === "completed" ? [40, 80, 80] : kind === "inhale" ? 30 : 55);
+  if (!preferences.haptics || !supportsHaptics) return;
+  navigator.vibrate(kind === "completed" ? [70, 70, 110] : kind === "inhale" ? [35, 35, 35] : [70, 35, 70]);
 }
 
 function feedback(kind) {
   playTone(kind);
+  playBreathSound(kind);
   vibrate(kind);
 }
 
@@ -88,8 +177,7 @@ async function releaseWakeLock() {
 
 function startPreparation() {
   if (preferences.sound) {
-    audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
-    audioContext.resume();
+    ensureAudio();
   }
   state.status = "preparing";
   state.preparationStartedAt = performance.now();
@@ -163,6 +251,7 @@ function pauseSession() {
   state.pausedElapsed = (performance.now() - state.sessionStartedAt) / 1000;
   state.status = "paused";
   cancelAnimationFrame(state.frame);
+  stopBreathSound();
   $("#phase-title").textContent = "已暂停";
   $("#phase-time").classList.add("hidden");
   $("#paused-hint").classList.remove("hidden");
@@ -178,12 +267,15 @@ function resumeSession() {
   $("#paused-hint").classList.add("hidden");
   $("#pause-button").innerHTML = "Ⅱ&nbsp;&nbsp;暂停";
   renderSession(state.pausedElapsed);
+  const snapshot = breathingSnapshot(state.pausedElapsed);
+  playBreathSound(snapshot.phase, PHASE_SECONDS * (1 - snapshot.phaseProgress));
   acquireWakeLock();
   runFrame();
 }
 
 function resetSession() {
   cancelAnimationFrame(state.frame);
+  stopBreathSound();
   state.status = "idle";
   state.lastPhaseIndex = -1;
   releaseWakeLock();
@@ -192,6 +284,7 @@ function resetSession() {
 
 function completeSession() {
   cancelAnimationFrame(state.frame);
+  stopBreathSound();
   state.status = "completed";
   feedback("completed");
   releaseWakeLock();
@@ -228,7 +321,16 @@ hapticsToggle.addEventListener("change", () => {
 soundToggle.addEventListener("change", () => {
   preferences.sound = soundToggle.checked;
   localStorage.setItem("breath.sound", String(preferences.sound));
-  if (preferences.sound) playTone("inhale");
+  if (!preferences.sound) {
+    stopBreathSound();
+  } else if (state.status === "running") {
+    const elapsed = (performance.now() - state.sessionStartedAt) / 1000;
+    const snapshot = breathingSnapshot(elapsed);
+    playTone(snapshot.phase);
+    playBreathSound(snapshot.phase, PHASE_SECONDS * (1 - snapshot.phaseProgress));
+  } else {
+    playTone("inhale");
+  }
 });
 
 document.addEventListener("visibilitychange", () => {
