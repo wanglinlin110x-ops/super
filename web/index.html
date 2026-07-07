@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#070914" />
+    <meta name="theme-color" content="#f2f7f4" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="呼吸计时器" />
     <meta name="description" content="睡前十分钟呼吸练习：吸气 5 秒，呼气 5 秒。" />
     <link rel="manifest" href="./manifest.webmanifest" />
@@ -33,6 +33,7 @@
         </div>
 
         <button id="start-button" class="primary-button" type="button">开始 10 分钟</button>
+        <p id="lock-note" class="lock-note">可息屏练习 · 10 分钟后自动结束</p>
 
         <div class="preferences" aria-label="练习偏好">
           <label class="preference-row">
@@ -42,7 +43,7 @@
           </label>
           <small id="haptics-support" class="preference-note hidden">iPhone 网页版受系统限制，暂不支持触感</small>
           <label class="preference-row">
-            <span class="preference-label"><span aria-hidden="true">◖</span> 呼吸引导音</span>
+            <span class="preference-label"><span aria-hidden="true">◖</span> 海浪与提示音</span>
             <input id="sound-toggle" type="checkbox" role="switch" />
             <span class="switch" aria-hidden="true"></span>
           </label>
@@ -103,6 +104,8 @@
         <button id="confirm-exit-button" value="exit" class="danger-button">结束练习</button>
       </form>
     </dialog>
+
+    <audio id="session-audio" preload="auto" playsinline src="./audio/ocean-breath-10min.wav"></audio>
 
     <script type="module" src="./app.js"></script>
   </body>
