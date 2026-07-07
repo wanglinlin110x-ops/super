@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#070914" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="呼吸计时器" />
+    <meta name="description" content="睡前十分钟呼吸练习：吸气 5 秒，呼气 5 秒。" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/icon-180.png" />
+    <link rel="icon" href="./icons/icon-192.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>呼吸计时器</title>
+  </head>
+  <body>
+    <main id="app" class="app-shell">
+      <section id="home-screen" class="screen home-screen" aria-labelledby="app-title">
+        <header class="home-header">
+          <h1 id="app-title">呼吸计时器</h1>
+          <p>给自己十分钟，慢慢安静下来</p>
+        </header>
+
+        <div class="orb-wrap home-orb" aria-hidden="true">
+          <div class="orb-glow"></div>
+          <div class="orb"></div>
+        </div>
+
+        <div class="session-summary">
+          <p>吸气 5 秒 <span>·</span> 呼气 5 秒</p>
+          <small>10 分钟 · 60 个呼吸周期</small>
+        </div>
+
+        <button id="start-button" class="primary-button" type="button">开始 10 分钟</button>
+
+        <div class="preferences" aria-label="练习偏好">
+          <label class="preference-row">
+            <span class="preference-label"><span aria-hidden="true">〰</span> 触觉提示</span>
+            <input id="haptics-toggle" type="checkbox" role="switch" />
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+          <label class="preference-row">
+            <span class="preference-label"><span aria-hidden="true">◖</span> 声音提示</span>
+            <input id="sound-toggle" type="checkbox" role="switch" />
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <p class="safety-note">如感到头晕或不适，请恢复自然呼吸并停止练习。</p>
+      </section>
+
+      <section id="prepare-screen" class="screen prepare-screen hidden" aria-labelledby="prepare-title">
+        <div class="center-stack">
+          <h2 id="prepare-title">准备</h2>
+          <div id="prepare-count" class="prepare-count" aria-live="polite">3</div>
+          <p>放松肩膀，保持自然</p>
+        </div>
+        <button id="cancel-prepare-button" class="text-button" type="button">取消</button>
+      </section>
+
+      <section id="session-screen" class="screen session-screen hidden" aria-labelledby="phase-title">
+        <header class="session-header">
+          <button id="exit-button" class="icon-button" type="button" aria-label="结束练习">×</button>
+          <time id="total-time" aria-label="练习剩余时间">10:00</time>
+          <span class="header-spacer" aria-hidden="true"></span>
+        </header>
+
+        <div class="session-center">
+          <div id="session-orb" class="orb-wrap session-orb" aria-hidden="true">
+            <div class="orb-glow"></div>
+            <div class="orb"></div>
+            <svg class="progress-ring" viewBox="0 0 300 300">
+              <circle cx="150" cy="150" r="135" pathLength="1"></circle>
+            </svg>
+          </div>
+          <div class="phase-copy">
+            <h2 id="phase-title" aria-live="polite">吸气</h2>
+            <p id="phase-time">5</p>
+            <p id="paused-hint" class="paused-hint hidden">准备好后，继续你的节奏</p>
+          </div>
+        </div>
+
+        <button id="pause-button" class="secondary-button" type="button">Ⅱ&nbsp;&nbsp;暂停</button>
+      </section>
+
+      <section id="complete-screen" class="screen complete-screen hidden" aria-labelledby="complete-title">
+        <div class="center-stack complete-copy">
+          <div class="complete-mark" aria-hidden="true">✓</div>
+          <h2 id="complete-title">练习完成</h2>
+          <p>10 分钟 · 60 次呼吸周期</p>
+        </div>
+        <button id="done-button" class="primary-button" type="button">完成</button>
+      </section>
+    </main>
+
+    <dialog id="exit-dialog" class="exit-dialog">
+      <form method="dialog">
+        <h2>结束本次练习？</h2>
+        <p>本次练习不会被记录为完成。</p>
+        <button value="continue" class="secondary-button">继续练习</button>
+        <button id="confirm-exit-button" value="exit" class="danger-button">结束练习</button>
+      </form>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "呼吸计时器",
+  "short_name": "呼吸计时器",
+  "description": "睡前十分钟呼吸练习：吸气 5 秒，呼气 5 秒。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#02030a",
+  "theme_color": "#070914",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

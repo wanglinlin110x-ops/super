@@ -1,0 +1,142 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* BreathTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* BreathTimerApp.swift */; };
+		A10000000000000000000002 /* BreathingTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* BreathingTimeline.swift */; };
+		A10000000000000000000003 /* BreathingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* BreathingSession.swift */; };
+		A10000000000000000000004 /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* FeedbackService.swift */; };
+		A10000000000000000000005 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* HomeView.swift */; };
+		A10000000000000000000006 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* SessionView.swift */; };
+		A10000000000000000000007 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* Components.swift */; };
+		A10000000000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* Assets.xcassets */; };
+		A10000000000000000000009 /* BreathingTimelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* BreathingTimelineTests.swift */; };
+		A1000000000000000000000A /* BreathingSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* BreathingSessionTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A30000000000000000000001 = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A40000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A50000000000000000000001;
+			remoteInfo = BreathTimer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* BreathTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathTimerApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* BreathingTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingTimeline.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* BreathingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingSession.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
+		A20000000000000000000005 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A20000000000000000000006 /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		A20000000000000000000007 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		A20000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A20000000000000000000009 /* BreathingTimelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingTimelineTests.swift; sourceTree = "<group>"; };
+		A2000000000000000000000A /* BreathingSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingSessionTests.swift; sourceTree = "<group>"; };
+		A2000000000000000000000B /* BreathTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreathTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000000000000000000000C /* BreathTimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BreathTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A60000000000000000000001 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A60000000000000000000002 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A70000000000000000000001 = {
+			isa = PBXGroup;
+			children = (A70000000000000000000002 /* BreathTimer */, A70000000000000000000006 /* BreathTimerTests */, A70000000000000000000007 /* Products */);
+			sourceTree = "<group>";
+		};
+		A70000000000000000000002 /* BreathTimer */ = {
+			isa = PBXGroup;
+			children = (A70000000000000000000003 /* App */, A70000000000000000000004 /* Core */, A70000000000000000000005 /* Views */, A20000000000000000000008 /* Assets.xcassets */);
+			path = BreathTimer;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000003 /* App */ = {isa = PBXGroup; children = (A20000000000000000000001 /* BreathTimerApp.swift */, A20000000000000000000004 /* FeedbackService.swift */, ); path = App; sourceTree = "<group>"; };
+		A70000000000000000000004 /* Core */ = {isa = PBXGroup; children = (A20000000000000000000002 /* BreathingTimeline.swift */, A20000000000000000000003 /* BreathingSession.swift */, ); path = Core; sourceTree = "<group>"; };
+		A70000000000000000000005 /* Views */ = {isa = PBXGroup; children = (A20000000000000000000005 /* HomeView.swift */, A20000000000000000000006 /* SessionView.swift */, A20000000000000000000007 /* Components.swift */, ); path = Views; sourceTree = "<group>"; };
+		A70000000000000000000006 /* BreathTimerTests */ = {isa = PBXGroup; children = (A20000000000000000000009 /* BreathingTimelineTests.swift */, A2000000000000000000000A /* BreathingSessionTests.swift */, ); path = BreathTimerTests; sourceTree = "<group>"; };
+		A70000000000000000000007 /* Products */ = {isa = PBXGroup; children = (A2000000000000000000000B /* BreathTimer.app */, A2000000000000000000000C /* BreathTimerTests.xctest */, ); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A50000000000000000000001 /* BreathTimer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A80000000000000000000002;
+			buildPhases = (A90000000000000000000001 /* Sources */, A60000000000000000000001 /* Frameworks */, AA0000000000000000000001 /* Resources */);
+			buildRules = ();
+			dependencies = ();
+			name = BreathTimer;
+			productName = BreathTimer;
+			productReference = A2000000000000000000000B /* BreathTimer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A50000000000000000000002 /* BreathTimerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A80000000000000000000003;
+			buildPhases = (A90000000000000000000002 /* Sources */, A60000000000000000000002 /* Frameworks */, AA0000000000000000000002 /* Resources */);
+			buildRules = ();
+			dependencies = (AB0000000000000000000001, );
+			name = BreathTimerTests;
+			productName = BreathTimerTests;
+			productReference = A2000000000000000000000C /* BreathTimerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A40000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {A50000000000000000000001 = {CreatedOnToolsVersion = 16.0; }; A50000000000000000000002 = {CreatedOnToolsVersion = 16.0; TestTargetID = A50000000000000000000001; }; }; };
+			buildConfigurationList = A80000000000000000000001;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = zh-Hans;
+			hasScannedForEncodings = 0;
+			knownRegions = (Base, "zh-Hans");
+			mainGroup = A70000000000000000000001;
+			productRefGroup = A70000000000000000000007 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (A50000000000000000000001 /* BreathTimer */, A50000000000000000000002 /* BreathTimerTests */);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA0000000000000000000001 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000008 /* Assets.xcassets in Resources */, ); runOnlyForDeploymentPostprocessing = 0; };
+		AA0000000000000000000002 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A90000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001, A10000000000000000000002, A10000000000000000000003, A10000000000000000000004, A10000000000000000000005, A10000000000000000000006, A10000000000000000000007, ); runOnlyForDeploymentPostprocessing = 0; };
+		A90000000000000000000002 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000009, A1000000000000000000000A, ); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AB0000000000000000000001 = {isa = PBXTargetDependency; target = A50000000000000000000001 /* BreathTimer */; targetProxy = A30000000000000000000001; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AC0000000000000000000001 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; COPY_PHASE_STRIP = NO; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_C_LANGUAGE_STANDARD = gnu17; GCC_NO_COMMON_BLOCKS = YES; GCC_OPTIMIZATION_LEVEL = 0; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE; ONLY_ACTIVE_ARCH = YES; SDKROOT = iphoneos; SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
+		AC0000000000000000000002 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; COPY_PHASE_STRIP = YES; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; ENABLE_NS_ASSERTIONS = NO; GCC_C_LANGUAGE_STANDARD = gnu17; GCC_NO_COMMON_BLOCKS = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MTL_ENABLE_DEBUG_INFO = NO; SDKROOT = iphoneos; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = "-O"; VALIDATE_PRODUCT = YES; }; name = Release; };
+		AC0000000000000000000003 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_ASSET_PATHS = ""; DEVELOPMENT_TEAM = ""; ENABLE_PREVIEWS = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "呼吸计时器"; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness"; INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; INFOPLIST_KEY_UIRequiresFullScreen = YES; INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.axing.BreathTimer; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = NO; SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; }; name = Debug; };
+		AC0000000000000000000004 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_TEAM = ""; ENABLE_PREVIEWS = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "呼吸计时器"; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness"; INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; INFOPLIST_KEY_UIRequiresFullScreen = YES; INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.axing.BreathTimer; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = NO; SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; }; name = Release; };
+		AC0000000000000000000005 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = com.axing.BreathTimerTests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BreathTimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BreathTimer"; }; name = Debug; };
+		AC0000000000000000000006 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = com.axing.BreathTimerTests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BreathTimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BreathTimer"; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A80000000000000000000001 = {isa = XCConfigurationList; buildConfigurations = (AC0000000000000000000001 /* Debug */, AC0000000000000000000002 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A80000000000000000000002 = {isa = XCConfigurationList; buildConfigurations = (AC0000000000000000000003 /* Debug */, AC0000000000000000000004 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A80000000000000000000003 = {isa = XCConfigurationList; buildConfigurations = (AC0000000000000000000005 /* Debug */, AC0000000000000000000006 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = A40000000000000000000001 /* Project object */;
+}
