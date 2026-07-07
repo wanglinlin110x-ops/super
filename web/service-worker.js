@@ -1,4 +1,4 @@
-const CACHE_NAME = "breath-timer-v7";
+const CACHE_NAME = "breath-timer-v8";
 const ASSETS = [
   "./",
   "./index.html",

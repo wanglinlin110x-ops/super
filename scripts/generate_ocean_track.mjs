@@ -45,8 +45,8 @@ function smoothStep(value) {
 
 function toneEnvelope(timeSinceStart, duration) {
   if (timeSinceStart < 0 || timeSinceStart >= duration) return 0;
-  const attack = Math.min(timeSinceStart / 0.09, 1);
-  const release = Math.min((duration - timeSinceStart) / 0.22, 1);
+  const attack = Math.min(timeSinceStart / 0.14, 1);
+  const release = Math.min((duration - timeSinceStart) / 0.3, 1);
   return smoothStep(attack) * smoothStep(release);
 }
 
@@ -63,16 +63,23 @@ for (let chunkStart = 0; chunkStart < totalSamples; chunkStart += chunkSamples) 
 
     slowNoise += (white - slowNoise) * 0.0024;
     mediumNoise += (white - mediumNoise) * 0.031;
-    const airyNoise = white * 0.16 + mediumNoise * 1.18 + slowNoise * 2.35;
 
     let oceanLevel;
+    let airyNoise;
     if (sessionTime < 0) {
       oceanLevel = 0.07 + 0.05 * smoothStep(time / preparationSeconds);
+      airyNoise = white * 0.1 + mediumNoise * 1.14 + slowNoise * 2.2;
     } else {
       const cyclePosition = (sessionTime % 10) / 10;
-      const breathSwell = 0.5 - 0.5 * Math.cos(cyclePosition * Math.PI * 2);
+      const isRising = cyclePosition < 0.5;
+      const phaseProgress = isRising ? cyclePosition * 2 : (cyclePosition - 0.5) * 2;
+      const smoothProgress = smoothStep(phaseProgress);
+      const tideLevel = isRising ? smoothProgress : 1 - smoothProgress;
+      const retreatUndertow = isRising ? 0 : Math.sin(phaseProgress * Math.PI) ** 2;
+      const brightness = 0.09 + tideLevel * 0.15;
       const naturalDrift = 0.86 + 0.08 * Math.sin(time * 0.41) + 0.06 * Math.sin(time * 0.17 + 1.2);
-      oceanLevel = (0.12 + breathSwell * 0.17) * naturalDrift;
+      airyNoise = white * brightness + mediumNoise * 1.15 + slowNoise * (2.15 + retreatUndertow * 1.05);
+      oceanLevel = (0.115 + tideLevel * 0.18) * naturalDrift;
     }
 
     const startFade = smoothStep(time / 1.4);
@@ -85,7 +92,7 @@ for (let chunkStart = 0; chunkStart < totalSamples; chunkStart += chunkSamples) 
       const phaseLocalTime = sessionTime - phaseStart;
       const phaseFrequency = phaseIndex % 2 === 0 ? 523.25 : 392;
       const phaseEnvelope = toneEnvelope(phaseLocalTime, phaseIndex % 2 === 0 ? 0.44 : 0.5);
-      sample += Math.sin(Math.PI * 2 * phaseFrequency * phaseLocalTime) * phaseEnvelope * 0.125;
+      sample += Math.sin(Math.PI * 2 * phaseFrequency * phaseLocalTime) * phaseEnvelope * 0.07;
     }
 
     const completionTime = sessionTime - 599.18;
