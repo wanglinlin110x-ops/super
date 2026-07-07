@@ -68,8 +68,8 @@ function ensureAudio() {
     let previous = 0;
     for (let index = 0; index < channel.length; index += 1) {
       const white = Math.random() * 2 - 1;
-      previous = previous * 0.94 + white * 0.06;
-      channel[index] = previous * 3.2;
+      previous = previous * 0.88 + white * 0.12;
+      channel[index] = white * 0.3 + previous * 1.55;
     }
   }
 
@@ -98,36 +98,29 @@ function playBreathSound(kind, duration = PHASE_SECONDS) {
   const length = Math.max(duration, 0.18);
   const noise = context.createBufferSource();
   const filter = context.createBiquadFilter();
-  const tone = context.createOscillator();
-  const toneGain = context.createGain();
   const gain = context.createGain();
 
   noise.buffer = noiseBuffer;
   noise.loop = true;
   filter.type = "bandpass";
-  filter.Q.value = kind === "inhale" ? 0.48 : 0.42;
-  filter.frequency.setValueAtTime(kind === "inhale" ? 850 : 2200, now);
-  filter.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 2400 : 600, now + length);
-
-  // 中频三角波在手机小扬声器上比低频正弦波更清晰，同时仍保持柔和。
-  tone.type = "triangle";
-  tone.frequency.setValueAtTime(kind === "inhale" ? 360 : 680, now);
-  tone.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 720 : 340, now + length);
-  toneGain.gain.value = kind === "inhale" ? 0.55 : 0.5;
+  filter.Q.value = 0.32;
+  filter.frequency.setValueAtTime(kind === "inhale" ? 1350 : 1200, now);
+  filter.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 1600 : 900, now + length);
 
   gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(kind === "inhale" ? 0.34 : 0.38, now + Math.min(0.55, length * 0.28));
-  gain.gain.setValueAtTime(kind === "inhale" ? 0.34 : 0.38, now + Math.max(length - 0.7, 0.12));
+  if (kind === "inhale") {
+    gain.gain.exponentialRampToValueAtTime(0.31, now + Math.max(length * 0.58, 0.1));
+  } else {
+    gain.gain.exponentialRampToValueAtTime(0.34, now + Math.min(0.42, length * 0.22));
+    gain.gain.exponentialRampToValueAtTime(0.085, now + Math.max(length * 0.76, 0.13));
+  }
   gain.gain.exponentialRampToValueAtTime(0.0001, now + length);
 
   noise.connect(filter).connect(gain);
-  tone.connect(toneGain).connect(gain);
   gain.connect(audioMaster);
   noise.start(now);
-  tone.start(now);
   noise.stop(now + length + 0.05);
-  tone.stop(now + length + 0.05);
-  activeBreathSound = { gain, nodes: [noise, tone] };
+  activeBreathSound = { gain, nodes: [noise] };
 }
 
 function playTone(kind) {
