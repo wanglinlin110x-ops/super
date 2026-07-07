@@ -254,7 +254,7 @@ audio { display: none; }
 .exit-dialog h2 { margin: 0; font-size: 22px; }
 .exit-dialog p { margin: 10px 0 22px; color: var(--muted); }
 .exit-dialog button + button { margin-top: 10px; }
-.danger-button { width: 100%; border-radius: 18px; color: #b64d59; background: #fff0f1; font-weight: 700; }
+.danger-button { width: 100%; border-radius: 18px; color: #5f746d; background: #edf3f0; font-weight: 700; }
 
 html[data-theme="dark"] {
   color-scheme: dark;
@@ -335,7 +335,7 @@ html[data-theme="dark"] .exit-dialog {
   box-shadow: 0 24px 80px rgba(0,0,0,.46);
 }
 html[data-theme="dark"] .exit-dialog::backdrop { background: rgba(0,7,5,.58); }
-html[data-theme="dark"] .danger-button { color: #ff9eaa; background: rgba(146,45,58,.18); }
+html[data-theme="dark"] .danger-button { color: #adc0b9; background: rgba(172, 202, 190, .08); }
 
 @media (max-height: 720px) {
   .screen { padding-top: calc(env(safe-area-inset-top) + 14px); padding-bottom: calc(env(safe-area-inset-bottom) + 14px); }
