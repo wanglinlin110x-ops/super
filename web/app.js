@@ -69,7 +69,7 @@ function ensureAudio() {
     for (let index = 0; index < channel.length; index += 1) {
       const white = Math.random() * 2 - 1;
       previous = previous * 0.94 + white * 0.06;
-      channel[index] = previous * 2.6;
+      channel[index] = previous * 3.2;
     }
   }
 
@@ -105,18 +105,19 @@ function playBreathSound(kind, duration = PHASE_SECONDS) {
   noise.buffer = noiseBuffer;
   noise.loop = true;
   filter.type = "bandpass";
-  filter.Q.value = kind === "inhale" ? 0.7 : 0.55;
-  filter.frequency.setValueAtTime(kind === "inhale" ? 420 : 1150, now);
-  filter.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 1450 : 300, now + length);
+  filter.Q.value = kind === "inhale" ? 0.48 : 0.42;
+  filter.frequency.setValueAtTime(kind === "inhale" ? 850 : 2200, now);
+  filter.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 2400 : 600, now + length);
 
-  tone.type = "sine";
-  tone.frequency.setValueAtTime(kind === "inhale" ? 165 : 205, now);
-  tone.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 245 : 118, now + length);
-  toneGain.gain.value = kind === "inhale" ? 0.16 : 0.12;
+  // 中频三角波在手机小扬声器上比低频正弦波更清晰，同时仍保持柔和。
+  tone.type = "triangle";
+  tone.frequency.setValueAtTime(kind === "inhale" ? 360 : 680, now);
+  tone.frequency.exponentialRampToValueAtTime(kind === "inhale" ? 720 : 340, now + length);
+  toneGain.gain.value = kind === "inhale" ? 0.55 : 0.5;
 
   gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(kind === "inhale" ? 0.17 : 0.19, now + Math.min(0.55, length * 0.28));
-  gain.gain.setValueAtTime(kind === "inhale" ? 0.17 : 0.19, now + Math.max(length - 0.7, 0.12));
+  gain.gain.exponentialRampToValueAtTime(kind === "inhale" ? 0.34 : 0.38, now + Math.min(0.55, length * 0.28));
+  gain.gain.setValueAtTime(kind === "inhale" ? 0.34 : 0.38, now + Math.max(length - 0.7, 0.12));
   gain.gain.exponentialRampToValueAtTime(0.0001, now + length);
 
   noise.connect(filter).connect(gain);
